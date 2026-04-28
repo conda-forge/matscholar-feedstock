@@ -1,0 +1,54 @@
+schema_version: 1
+
+context:
+  name: matscholar
+  version: "0.0.3"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/materialsintelligence/${{ name }}/archive/master.tar.gz
+  sha256: 41e97b44f254b29664dcdbef07e9758ab4185a34c0c630ca5aad67c65b290991
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - numpy
+    - requests
+    - pyyaml
+
+tests:
+  - python:
+      imports:
+        - matscholar
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  license: MIT
+  license_file: LICENSE
+  summary: Code to access the Matscholar public API.
+  description: |
+    matscholar (Materials Scholar) is a Python library for materials-
+    focused natural language processing (NLP). It is maintained by a team
+    of researchers at UC Berkeley and Lawrence Berkeley National
+    Laboratory as part of a project funded by the Toyota Research
+    Institute.
+  homepage: https://matscholar.com/
+  repository: https://github.com/materialsintelligence/matscholar
+  documentation: https://github.com/materialsintelligence/matscholar
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
